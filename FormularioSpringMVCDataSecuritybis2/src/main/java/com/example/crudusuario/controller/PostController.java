@@ -82,15 +82,37 @@ public class PostController {
         model.addAttribute("secciones", seccionService.getAllSecciones());
         return "user/edit-post";
     }
-    @PostMapping("/edit/posts")
+    /*@PostMapping("/edit/posts")
     public String updatePost(@RequestParam("id") Long id, @ModelAttribute Post postEditado) {
         if (id == null) {
             throw new IllegalArgumentException("El ID del post no puede ser nulo.");
         }
         postService.editarPost(id, postEditado);
         return "redirect:/list/posts";  
-    }
-    
+    }*/
+    @PostMapping("/edit/posts")
+    public String updatePost(@RequestParam("id") Long id, 
+                             @RequestParam("seccionId") Long seccionId, 
+                             @ModelAttribute Post postEditado) {
+        postService.editarPost(id, postEditado, seccionId);
+        return "redirect:/list/posts";  
+    }/*
+    @PostMapping("/edit/posts")
+    public String updatePost(@RequestParam("id") Long id, 
+                             @RequestParam("seccionId") Long seccionId, 
+                             @ModelAttribute Post postEditado) {
+        if (id == null) {
+            throw new IllegalArgumentException("El ID del post no puede ser nulo.");
+        }
+
+        // Obtener la sección seleccionada
+        Seccion seccion = seccionService.getSeccionById(seccionId);
+        postEditado.setSeccion(seccion);
+
+        postService.editarPost(id, postEditado);
+        return "redirect:/list/posts";  
+    }*/
+
     @PostMapping("/delete/posts/{id}")
     public String deletePost(@PathVariable Long id) {
         postService.deletePostById(id);
