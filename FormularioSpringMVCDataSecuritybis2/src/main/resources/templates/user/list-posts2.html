@@ -19,6 +19,7 @@
                     <th>Fecha</th>
                     <th>Usuario</th>
                     <th>Texto</th>
+					<th>Sección</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,7 @@
                     <td th:text="${post.fecha}"></td>
                     <td th:text="${post.usuario.username}"></td>
                     <td th:text="${post.texto}"></td>
+					<td th:text="${post.seccion.nombre}"></td> 
                 </tr>
             </tbody>
         </table>
