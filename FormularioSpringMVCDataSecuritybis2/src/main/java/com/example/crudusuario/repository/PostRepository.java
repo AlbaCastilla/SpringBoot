@@ -15,4 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface PostRepository extends JpaRepository<Post, Long> {
 	@Query("SELECT p FROM Post p WHERE p.usuario != :usuario")
     List<Post> findByUsuarioNot(@Param("usuario") Usuario usuario);
+	
+	@Query("SELECT p FROM Post p WHERE p.usuario = :usuario")
+    List<Post> findByUsuario(@Param("usuario") Usuario usuario);
 }

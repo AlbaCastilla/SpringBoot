@@ -1,0 +1,46 @@
+<!--<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Post</title>
+</head>
+<body>
+    <h2>Crear un Nuevo Post</h2>
+    <form th:action="@{/create/posts}" th:object="${post}" method="post">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" th:field="*{titulo}" required>
+        <br>
+        <label for="texto">Texto:</label>
+        <textarea id="texto" name="texto" th:field="*{texto}" required></textarea>
+        <br>
+        <button type="submit">Publicar</button>
+    </form>
+    <br>
+    <a href="/list/posts">Volver a la lista de posts</a>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Post</title>
+</head>
+<body>
+    <h2>Crear un Nuevo Post</h2>
+    <form th:action="@{/create/posts}" th:object="${post}" method="post">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" th:field="*{titulo}" required>
+        <br>
+        <label for="subtitulo">Subtítulo:</label>
+        <input type="text" id="subtitulo" name="subtitulo" th:field="*{subtitulo}">
+        <br>
+        <label for="texto">Texto:</label>
+        <textarea id="texto" name="texto" th:field="*{texto}" required></textarea>
+        <br>
+        <button type="submit">Publicar</button>
+    </form>
+    <br>
+    <a href="/list/posts">Volver a la lista de posts</a>
+</body>
+</html>
