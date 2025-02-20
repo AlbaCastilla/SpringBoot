@@ -30,6 +30,63 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public Post getPostById(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post no encontrado"));
+    }
+/*
+    public Post editarPost(Long id, Post postEditado) {
+        Post postExistente = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post no encontrado"));
+
+        postExistente.setTitulo(postEditado.getTitulo());
+        postExistente.setSubtitulo(postEditado.getSubtitulo());
+        postExistente.setTexto(postEditado.getTexto());
+
+        if (postEditado.getSeccion() != null && postEditado.getSeccion().getId() != null) {
+            Seccion seccion = seccionService.getSeccionById(postEditado.getSeccion().getId());
+            postExistente.setSeccion(seccion);
+        }
+
+        return postRepository.save(postExistente);
+    }
+    public Post editarPost(Long id, Post postEditado) {
+        Post postExistente = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post no encontrado"));
+
+        postExistente.setTitulo(postEditado.getTitulo());
+        postExistente.setSubtitulo(postEditado.getSubtitulo());
+        postExistente.setTexto(postEditado.getTexto());
+
+        if (postEditado.getSeccion() != null && postEditado.getSeccion().getId() != null) {
+            System.out.println("Sección enviada desde el formulario: " + postEditado.getSeccion().getId());
+            Seccion seccion = seccionService.getSeccionById(postEditado.getSeccion().getId());
+            postExistente.setSeccion(seccion);
+        } else {
+            System.out.println("Sección no enviada o ID nulo.");
+        }
+
+        return postRepository.save(postExistente);
+    }*/
+    public Post editarPost(Long id, Post postEditado) {
+        Post postExistente = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post no encontrado"));
+
+        postExistente.setTitulo(postEditado.getTitulo());
+        postExistente.setSubtitulo(postEditado.getSubtitulo());
+        postExistente.setTexto(postEditado.getTexto());
+
+        if (postEditado.getSeccion() != null && postEditado.getSeccion().getId() != null) {
+            Seccion seccion = seccionService.getSeccionById(postEditado.getSeccion().getId());
+            postExistente.setSeccion(seccion);
+        }
+
+        return postRepository.save(postExistente);
+    }
+
+
+
+
     // Método para obtener solo los posts que no sean del usuario autenticado
     public List<Post> getPostsDeOtrosUsuarios() {
         // Obtener el usuario actualmente autenticado
