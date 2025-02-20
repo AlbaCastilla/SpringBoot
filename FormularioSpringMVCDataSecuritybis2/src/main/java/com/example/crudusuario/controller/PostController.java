@@ -3,19 +3,28 @@ package com.example.crudusuario.controller;
 
 import com.example.crudusuario.model.Post;
 import com.example.crudusuario.service.PostService;
+import com.example.crudusuario.service.SeccionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
 public class PostController {
+	private final PostService postService;
+    private final SeccionService seccionService;
+
     @Autowired
-    private PostService postService;
+    public PostController(PostService postService, SeccionService seccionService) {
+        this.postService = postService;
+        this.seccionService = seccionService;
+    }
 
     @GetMapping("/list/posts")
     public String listPosts(Model model) {
@@ -34,24 +43,14 @@ public class PostController {
     @GetMapping("/create/posts")
     public String createPostForm(Model model) {
         model.addAttribute("post", new Post());
+        model.addAttribute("secciones", seccionService.getAllSecciones()); 
         return "user/create-post";  // Thymeleaf template for the form
     }
 
     @PostMapping("/create/posts")
-    public String createPost(@ModelAttribute Post post) {
-        postService.createPost(post);  // Save the post using the service layer
-        return "redirect:/list/posts";  // Redirect after form submission
+    public String createPost(@ModelAttribute Post post, @RequestParam Long seccionId) {
+        postService.createPost(post, seccionId);
+        return "redirect:/list/posts";  // Redirigir a la lista de posts después de guardar el post
     }
     
-    /*@GetMapping("/create/posts")
- public String showCreatePostForm(Model model) {
-     model.addAttribute("post", new Post());
-     return "user/create-post";
- }
-
- @PostMapping("/create/posts")
- public String createPost(@ModelAttribute Post post) {
-     postService.createPost(post);
-     return "redirect:/list/posts";
- }*/
 }

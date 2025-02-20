@@ -1,6 +1,7 @@
 package com.example.crudusuario.service;
 
 import com.example.crudusuario.model.Post;
+import com.example.crudusuario.model.Seccion;
 import com.example.crudusuario.model.Usuario;
 import com.example.crudusuario.repository.PostRepository;
 import com.example.crudusuario.repository.UsuarioRepository;
@@ -16,10 +17,12 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UsuarioRepository usuarioRepository;
+    private final SeccionService seccionService;
 
-    public PostService(PostRepository postRepository, UsuarioRepository usuarioRepository) {
+    public PostService(PostRepository postRepository, UsuarioRepository usuarioRepository, SeccionService seccionService) {
         this.postRepository = postRepository;
         this.usuarioRepository = usuarioRepository;
+        this.seccionService = seccionService;
     }
 
     // Método para obtener todos los posts
@@ -64,6 +67,36 @@ public class PostService {
         return postRepository.findByUsuario(usuarioActual);
     }
     
+    public Post createPost(Post post, Long seccionId) {
+        // Obtener el usuario actualmente autenticado
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        // Buscar el usuario en la base de datos
+        Usuario usuarioActual = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Establecer el usuario del post
+        post.setUsuario(usuarioActual);
+
+        // Establecer la fecha actual
+        post.setFecha(LocalDateTime.now());
+
+        // Obtener la sección seleccionada
+        Seccion seccion = seccionService.getSeccionById(seccionId);
+        post.setSeccion(seccion);
+
+        // Guardar el post
+        return postRepository.save(post);
+    }
+
+    
     
     public Post createPost(Post post) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -78,18 +111,26 @@ public class PostService {
         Usuario usuarioActual = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Automatically set the 'fecha' field to the current date and time
+        // Retrieve Seccion by ID
+        Long seccionId = post.getSeccion().getId();
+        
+        if (seccionId == null) {
+            throw new RuntimeException("Sección ID is null");
+        }
+
+        // Retrieve Seccion by ID using SeccionService
+        Seccion seccion = seccionService.getSeccionById(seccionId);
+
+        post.setSeccion(seccion);
         post.setFecha(LocalDateTime.now());
 
-        // Optionally, set the subtitulo if it is not provided
+        // Optionally set a default subtitulo
         if (post.getSubtitulo() == null || post.getSubtitulo().isEmpty()) {
-            post.setSubtitulo("Default Subtitulo");  // Optional default value
+            post.setSubtitulo("Default Subtitulo");
         }
 
         post.setUsuario(usuarioActual);
         return postRepository.save(post);
     }
 
-    
-    
 }
