@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,5 +53,43 @@ public class PostController {
         postService.createPost(post, seccionId);
         return "redirect:/list/posts";  // Redirigir a la lista de posts después de guardar el post
     }
+    
+    /*@GetMapping("/edit/posts/{id}")
+    public String editPostForm(@PathVariable Long id, Model model) {
+        Post post = postService.getPostById(id);
+        model.addAttribute("post", post);
+        model.addAttribute("secciones", seccionService.getAllSecciones());
+        return "user/edit-post";
+    }
+
+    @PostMapping("/edit/posts")
+    public String updatePost(@RequestParam("id") Long id, @ModelAttribute Post postEditado) {
+        postService.editarPost(id, postEditado);
+        return "redirect:/list/posts";  // Redirige a la lista después de editar
+    }
+    @PostMapping("/edit/posts")
+    public String updatePost(@ModelAttribute Post postEditado) {
+        postService.editarPost(postEditado.getId(), postEditado);
+        return "redirect:/list/posts";  // Redirige a la lista después de editar
+    }
+    */@GetMapping("/edit/posts/{id}")
+    public String editPostForm(@PathVariable Long id, Model model) {
+        Post post = postService.getPostById(id);
+        if (post == null) {
+            throw new IllegalArgumentException("No se encontró un post con el ID: " + id);
+        }
+        model.addAttribute("post", post);
+        model.addAttribute("secciones", seccionService.getAllSecciones());
+        return "user/edit-post";
+    }
+    @PostMapping("/edit/posts")
+    public String updatePost(@RequestParam("id") Long id, @ModelAttribute Post postEditado) {
+        if (id == null) {
+            throw new IllegalArgumentException("El ID del post no puede ser nulo.");
+        }
+        postService.editarPost(id, postEditado);
+        return "redirect:/list/posts";  
+    }
+
     
 }
