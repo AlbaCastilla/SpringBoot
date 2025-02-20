@@ -20,14 +20,21 @@
         <label for="texto">Texto:</label>
         <textarea id="texto" th:field="*{texto}" required></textarea>
         
-		<label for="seccion">Sección:</label>
-		<!--<select th:field="*{seccion.id}" id="seccion">
+		<!--<label for="seccion">Sección:</label>
+		<!-<select th:field="*{seccion.id}" id="seccion">
+		    <option th:each="seccion : ${secciones}" 
+		            th:value="${seccion.id}" 
+		            th:text="${seccion.nombre}"
+		            th:selected="${seccion.id == post.seccion.id}"></option>
+		</select>--
+		<select th:field="*{seccion.id}" id="seccion">
 		    <option th:each="seccion : ${secciones}" 
 		            th:value="${seccion.id}" 
 		            th:text="${seccion.nombre}"
 		            th:selected="${seccion.id == post.seccion.id}"></option>
 		</select>-->
-		<select th:field="*{seccion.id}" id="seccion">
+		<label for="seccion" class="form-label">Sección:</label>
+		<select id="seccion" name="seccionId" class="form-select" required>
 		    <option th:each="seccion : ${secciones}" 
 		            th:value="${seccion.id}" 
 		            th:text="${seccion.nombre}"

@@ -68,7 +68,7 @@ public class PostService {
 
         return postRepository.save(postExistente);
     }*/
-    public Post editarPost(Long id, Post postEditado) {
+    public Post editarPost(Long id, Post postEditado, Long seccionId) {
         Post postExistente = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post no encontrado"));
 
@@ -76,10 +76,9 @@ public class PostService {
         postExistente.setSubtitulo(postEditado.getSubtitulo());
         postExistente.setTexto(postEditado.getTexto());
 
-        if (postEditado.getSeccion() != null && postEditado.getSeccion().getId() != null) {
-            Seccion seccion = seccionService.getSeccionById(postEditado.getSeccion().getId());
-            postExistente.setSeccion(seccion);
-        }
+        // Forzar la actualización de la sección
+        Seccion seccion = seccionService.getSeccionById(seccionId);
+        postExistente.setSeccion(seccion);
 
         return postRepository.save(postExistente);
     }
@@ -88,7 +87,6 @@ public class PostService {
     public void deletePostById(Long id) {
         postRepository.deleteById(id);
     }
-
 
 
     // Método para obtener solo los posts que no sean del usuario autenticado
