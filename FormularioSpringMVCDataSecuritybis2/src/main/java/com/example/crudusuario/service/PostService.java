@@ -84,6 +84,10 @@ public class PostService {
         return postRepository.save(postExistente);
     }
 
+    
+    public void deletePostById(Long id) {
+        postRepository.deleteById(id);
+    }
 
 
 

@@ -90,6 +90,12 @@ public class PostController {
         postService.editarPost(id, postEditado);
         return "redirect:/list/posts";  
     }
+    
+    @PostMapping("/delete/posts/{id}")
+    public String deletePost(@PathVariable Long id) {
+        postService.deletePostById(id);
+        return "redirect:/list/posts"; // Redirige a la lista de posts después de borrar
+    }
 
     
 }
