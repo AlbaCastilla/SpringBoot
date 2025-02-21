@@ -54,25 +54,7 @@ public class PostController {
         return "redirect:/list/posts";  // Redirigir a la lista de posts después de guardar el post
     }
     
-    /*@GetMapping("/edit/posts/{id}")
-    public String editPostForm(@PathVariable Long id, Model model) {
-        Post post = postService.getPostById(id);
-        model.addAttribute("post", post);
-        model.addAttribute("secciones", seccionService.getAllSecciones());
-        return "user/edit-post";
-    }
-
-    @PostMapping("/edit/posts")
-    public String updatePost(@RequestParam("id") Long id, @ModelAttribute Post postEditado) {
-        postService.editarPost(id, postEditado);
-        return "redirect:/list/posts";  // Redirige a la lista después de editar
-    }
-    @PostMapping("/edit/posts")
-    public String updatePost(@ModelAttribute Post postEditado) {
-        postService.editarPost(postEditado.getId(), postEditado);
-        return "redirect:/list/posts";  // Redirige a la lista después de editar
-    }
-    */@GetMapping("/edit/posts/{id}")
+    @GetMapping("/edit/posts/{id}")
     public String editPostForm(@PathVariable Long id, Model model) {
         Post post = postService.getPostById(id);
         if (post == null) {
@@ -82,36 +64,14 @@ public class PostController {
         model.addAttribute("secciones", seccionService.getAllSecciones());
         return "user/edit-post";
     }
-    /*@PostMapping("/edit/posts")
-    public String updatePost(@RequestParam("id") Long id, @ModelAttribute Post postEditado) {
-        if (id == null) {
-            throw new IllegalArgumentException("El ID del post no puede ser nulo.");
-        }
-        postService.editarPost(id, postEditado);
-        return "redirect:/list/posts";  
-    }*/
+    
     @PostMapping("/edit/posts")
     public String updatePost(@RequestParam("id") Long id, 
                              @RequestParam("seccionId") Long seccionId, 
                              @ModelAttribute Post postEditado) {
         postService.editarPost(id, postEditado, seccionId);
         return "redirect:/list/posts";  
-    }/*
-    @PostMapping("/edit/posts")
-    public String updatePost(@RequestParam("id") Long id, 
-                             @RequestParam("seccionId") Long seccionId, 
-                             @ModelAttribute Post postEditado) {
-        if (id == null) {
-            throw new IllegalArgumentException("El ID del post no puede ser nulo.");
-        }
-
-        // Obtener la sección seleccionada
-        Seccion seccion = seccionService.getSeccionById(seccionId);
-        postEditado.setSeccion(seccion);
-
-        postService.editarPost(id, postEditado);
-        return "redirect:/list/posts";  
-    }*/
+    }
 
     @PostMapping("/delete/posts/{id}")
     public String deletePost(@PathVariable Long id) {
@@ -121,3 +81,48 @@ public class PostController {
 
     
 }
+
+
+/*@GetMapping("/edit/posts/{id}")
+public String editPostForm(@PathVariable Long id, Model model) {
+    Post post = postService.getPostById(id);
+    model.addAttribute("post", post);
+    model.addAttribute("secciones", seccionService.getAllSecciones());
+    return "user/edit-post";
+}
+
+@PostMapping("/edit/posts")
+public String updatePost(@RequestParam("id") Long id, @ModelAttribute Post postEditado) {
+    postService.editarPost(id, postEditado);
+    return "redirect:/list/posts";  // Redirige a la lista después de editar
+}
+@PostMapping("/edit/posts")
+public String updatePost(@ModelAttribute Post postEditado) {
+    postService.editarPost(postEditado.getId(), postEditado);
+    return "redirect:/list/posts";  // Redirige a la lista después de editar
+}
+*/
+/*
+@PostMapping("/edit/posts")
+public String updatePost(@RequestParam("id") Long id, 
+                         @RequestParam("seccionId") Long seccionId, 
+                         @ModelAttribute Post postEditado) {
+    if (id == null) {
+        throw new IllegalArgumentException("El ID del post no puede ser nulo.");
+    }
+
+    // Obtener la sección seleccionada
+    Seccion seccion = seccionService.getSeccionById(seccionId);
+    postEditado.setSeccion(seccion);
+
+    postService.editarPost(id, postEditado);
+    return "redirect:/list/posts";  
+}*/
+/*@PostMapping("/edit/posts")
+public String updatePost(@RequestParam("id") Long id, @ModelAttribute Post postEditado) {
+    if (id == null) {
+        throw new IllegalArgumentException("El ID del post no puede ser nulo.");
+    }
+    postService.editarPost(id, postEditado);
+    return "redirect:/list/posts";  
+}*/
