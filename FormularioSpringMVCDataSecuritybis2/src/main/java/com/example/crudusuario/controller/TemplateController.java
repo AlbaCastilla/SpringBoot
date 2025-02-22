@@ -13,19 +13,22 @@ public class TemplateController {
         return "user/login";
     }
 
-//    @GetMapping("/registro")
-//    public String registro(Model model) {
-//        model.addAttribute("usuario", new Usuario());
-//        return "user/registro";
-//    }
-
-//    @GetMapping("/home")
-//    public String home() {
-//        return "user/home";
-//    }
 
     @GetMapping("/admin/dashboard")
     public String dashboard() {
         return "admin/dashboard";
     }
 }
+
+
+
+//@GetMapping("/registro")
+//public String registro(Model model) {
+//  model.addAttribute("usuario", new Usuario());
+//  return "user/registro";
+//}
+
+//@GetMapping("/home")
+//public String home() {
+//  return "user/home";
+//}
