@@ -58,7 +58,7 @@ public class UsuarioController {
 
     @PostMapping("/registro")
     public ResponseEntity<String> registrarUsuario(@RequestBody Usuario usuario) {
-    	usuario.setRole("USER");
+    	usuario.setRole("USER");//asigna user automáticamente ahora mismo a todos los usarios
     	usuarioService.registrarUsuario(usuario);
         return ResponseEntity.ok("User registered successfully");
     }
