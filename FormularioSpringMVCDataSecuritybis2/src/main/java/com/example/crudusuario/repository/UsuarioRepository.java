@@ -8,5 +8,6 @@ import com.example.crudusuario.model.Usuario;
 ;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Optional<Usuario> findByUsername(String username);
+	// Busca un usuario por su nombre de usuario. Devuelve un Optional<Usuario> para manejar el caso en que no se encuentre el usuario.
+	Optional<Usuario> findByUsername(String username);
 }

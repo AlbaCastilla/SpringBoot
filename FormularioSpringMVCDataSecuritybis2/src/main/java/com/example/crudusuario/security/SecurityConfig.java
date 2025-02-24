@@ -81,14 +81,15 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 class SecurityConfig {
+	// Configura la seguridad de la aplicación web.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/css/**", "/js/**", "/registro").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                .anyRequest().authenticated()
+        http.csrf(csrf -> csrf.disable())//para futuro api con spring
+            .authorizeHttpRequests(auth -> auth // Define las reglas de autorización de solicitudes
+                .requestMatchers("/login", "/css/**", "/js/**", "/registro").permitAll() // Permite acceso público a estas rutas sin logueo
+                .requestMatchers("/admin/**").hasRole("ADMIN")// Requiere rol ADMIN para las rutas que comienzan con /admin/
+                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")//todo roll puede acceder
+                .anyRequest().authenticated()// Requiere autenticación para cualquier otra solicitud
             )
             .formLogin(form -> form
                 .loginPage("/login")

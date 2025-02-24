@@ -36,5 +36,5 @@ public class SeccionService {
                               .orElseThrow(() -> new RuntimeException("Sección con nombre '" + nombre + "' no encontrada"));
     }
 
-    // Optionally, you can add methods for specific queries (e.g., by ID or name)
+    
 }

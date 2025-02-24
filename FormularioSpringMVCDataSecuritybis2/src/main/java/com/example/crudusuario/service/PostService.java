@@ -91,11 +91,15 @@ public class PostService {
 
     // Método para obtener solo los posts que no sean del usuario autenticado
     public List<Post> getPostsDeOtrosUsuarios() {
-        // Obtener el usuario actualmente autenticado
+    	// Obtiene el principal (usuario autenticado) del contexto de seguridad de Spring Security
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
 
+     // Verifica si el objeto principal es una instancia de UserDetails (usuario autenticado con detalles de usuario)
         if (principal instanceof UserDetails) {
+        	// Verifica si el objeto 'principal' es una instancia de 'UserDetails' (es decir, si el usuario autenticado contiene detalles de usuario)
+        	// Si lo es, se realiza un cast a 'UserDetails' para poder acceder a su nombre de usuario (username)
+        	// Si no es una instancia de 'UserDetails', se usa el método 'toString()' para obtener una representación del objeto principal
             username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
